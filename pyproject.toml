@@ -50,3 +50,8 @@ ppisp = { git = "https://github.com/nv-tlabs/ppisp", tag = "v1.0.0" }
 name = "pytorch-cu130"
 url = "https://download.pytorch.org/whl/cu130"
 explicit = true
+
+[dependency-groups]
+dev = [
+    "ipython>=9.12.0",
+]

@@ -181,22 +181,20 @@ class Parser:
         else:
             image_dir_suffix = ""
         colmap_image_dir = os.path.join(data_dir, "images")
-        image_dir = os.path.join(data_dir, "images" + image_dir_suffix)
-        for d in [image_dir, colmap_image_dir]:
+        for d in [colmap_image_dir]:
             if not os.path.exists(d):
                 raise ValueError(f"Image folder {d} does not exist.")
 
         # Downsampled images may have different names vs images used for COLMAP,
         # so we need to map between the two sorted lists of files.
         colmap_files = sorted(_get_rel_paths(colmap_image_dir))
-        image_files = sorted(_get_rel_paths(image_dir))
-        if factor > 1 and os.path.splitext(image_files[0])[1].lower() == ".jpg":
-            image_dir = _resize_image_folder(
-                colmap_image_dir, image_dir + "_png", factor=factor
+        if factor > 1 and os.path.splitext(colmap_files[0])[1].lower() == ".jpg":
+            resized_image_dir = _resize_image_folder(
+                colmap_image_dir, colmap_image_dir + image_dir_suffix + "_png", factor=factor
             )
-            image_files = sorted(_get_rel_paths(image_dir))
+            image_files = sorted(_get_rel_paths(resized_image_dir))
         colmap_to_image = dict(zip(colmap_files, image_files))
-        image_paths = [os.path.join(image_dir, colmap_to_image[f]) for f in image_names]
+        image_paths = [os.path.join(resized_image_dir, colmap_to_image[f]) for f in image_names]
 
         # 3D points and {image_name -> [point_idx]}
         points = manager.points3D.astype(np.float32)
