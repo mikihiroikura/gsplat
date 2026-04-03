@@ -15,7 +15,7 @@ services:
       - /dev/bus/usb:/dev/bus/usb
       - /tmp/.X11-unix/:/tmp/.X11-unix
       - ${HOME}/.Xauthority:/home/gsplat/.Xauthority:ro
-      # - .:/home/gsplat/src/gsplat                  # Mount this code in docker container for development
+      - .:/home/gsplat/src/gsplat                  # Mount this code in docker container for development
       - ${DATA_DIR}:/data # Mount recorded data from host. Please change directory. Copy .env-example as .env and modify path of DATA_DIR
     environment:
       - DISPLAY=${DISPLAY}

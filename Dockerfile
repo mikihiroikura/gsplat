@@ -11,6 +11,10 @@ RUN apt update && \
     libgl1-mesa-dev \
     libglib2.0-0
 
+# Add library for CUDA
+RUN apt update && \
+    apt install -y libglm-dev
+
 # Add User ID and Group ID
 ARG UNAME=gsplat
 ARG UID=1000
