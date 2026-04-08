@@ -19,4 +19,6 @@ services:
       - ${DATA_DIR}:/data # Mount recorded data from host. Please change directory. Copy .env-example as .env and modify path of DATA_DIR
     environment:
       - DISPLAY=${DISPLAY}
+    ports:
+      - "8081:8081"  # port mapping
     command: sleep infinity

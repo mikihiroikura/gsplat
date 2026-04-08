@@ -40,5 +40,8 @@ RUN chown -R $UNAME:$UNAME ${CODE_DIR}/src
 USER $UNAME
 WORKDIR ${CODE_DIR}
 
-### Install uv
+### Install uv and make virtual environment
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/home/gsplat/.local/bin:$PATH"
+RUN cd ${CODE_DIR}/src/gsplat && \
+    uv sync
