@@ -1,4 +1,4 @@
-FROM nvidia/cuda:13.0.2-devel-ubuntu22.04
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
 
 ENV TZ=Europe/Rome
 ENV DEBIAN_FRONTEND=noninteractive
@@ -29,9 +29,9 @@ RUN echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/${UNAME}
 
 ARG CODE_DIR=/home/${UNAME}
 
-### Install gsplat code
-RUN mkdir -p ${CODE_DIR}/src && cd ${CODE_DIR}/src && \
-    git clone https://github.com/nerfstudio-project/gsplat.git
+### Copy gsplat code
+RUN mkdir -p ${CODE_DIR}/src
+COPY ./ ${CODE_DIR}/src/gsplat
 
 ### Change owner
 RUN chown -R $UNAME:$UNAME ${CODE_DIR}/src
@@ -40,8 +40,7 @@ RUN chown -R $UNAME:$UNAME ${CODE_DIR}/src
 USER $UNAME
 WORKDIR ${CODE_DIR}
 
-### Install uv and make virtual environment
+### Install uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/home/gsplat/.local/bin:$PATH"
-RUN cd ${CODE_DIR}/src/gsplat && \
-    uv sync
+
