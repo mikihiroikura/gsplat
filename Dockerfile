@@ -1,4 +1,4 @@
-FROM nvidia/cuda:13.0.2-devel-ubuntu22.04
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
 
 ENV TZ=Europe/Rome
 ENV DEBIAN_FRONTEND=noninteractive
