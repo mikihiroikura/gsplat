@@ -19,7 +19,27 @@ gsplat is an open-source library for CUDA accelerated rasterization of gaussians
 
 [April 2025] [NVIDIA 3DGUT](https://research.nvidia.com/labs/toronto-ai/3DGUT/) is now integrated in gsplat! Checkout [here](docs/3dgut.md) for more details. [[NVIDIA Tech Blog]](https://developer.nvidia.com/blog/revolutionizing-neural-reconstruction-and-rendering-in-gsplat-with-3dgut/) [[NVIDIA Sweepstakes]](https://www.nvidia.com/en-us/research/3dgut-sweepstakes/)
 
-## Installation
+## Installation with Docker and uv
+Docker build
+```
+docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g)  -t gsplat:latest .
+```
+
+Make docker container via docker-compose, and go inside docker container
+```
+docker compose up -d
+docker exec -it gsplat /bin/bash
+```
+
+(Inside container): Make uv virtual enviroment  
+In case docker container is removed and then recreated, please run the following every time
+```
+cd src/gsplat
+uv sync
+```
+
+
+## Original: Installation
 
 **Dependence**: Please install [Pytorch](https://pytorch.org/get-started/locally/) first.
 
@@ -42,6 +62,14 @@ pip install gsplat --index-url https://docs.gsplat.studio/whl/pt20cu118
 ```
 
 To build gsplat from source on Windows, please check [this instruction](docs/INSTALL_WIN.md).
+
+## Run code
+Training
+```
+(in docker container): cd src/gsplat
+CUDA_VISIBLE_DEVICES=0 uv run examples/simple_trainer.py default --data_dir /data/3DGS/tandt/train --data_factor 4 --result_dir ./results/train
+```
+
 
 ## Evaluation
 
