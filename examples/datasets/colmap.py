@@ -190,7 +190,7 @@ class Parser:
         # so we need to map between the two sorted lists of files.
         colmap_files = sorted(_get_rel_paths(colmap_image_dir))
         image_files = sorted(_get_rel_paths(image_dir))
-        if factor > 1 and os.path.splitext(colmap_files[0])[1].lower() == ".jpg":
+        if factor > 1:#and os.path.splitext(colmap_files[0])[1].lower() == ".jpg":
             image_dir = _resize_image_folder(
                 colmap_image_dir, colmap_image_dir + image_dir_suffix + "_png", factor=factor
             )
